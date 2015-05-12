@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "BasicForm";
 }
 
@@ -8,15 +7,57 @@
 <div id="basic">
 
     <label>
-        Enter your name:
+        Firstname:
     </label>
-    <input type="text" data-bind="value: name" />
+    <input type="text" data-bind="value: firstname" />
 
-    <!-- ko if: name() -->
-    <p data-bind="text: 'Hello, ' + name() + '!'"></p>
+    <br />
+
+    <label>
+        Lastname:
+    </label>
+    <input type="text" data-bind="textInput: lastname" />
+
+    <br />
+
+    <label>
+        Occupation:
+    </label>
+    <select data-bind="options: occupationList, value: occupation, optionsCaption: 'Choose one...', valueAllowUnset: true"></select>
+
+    <br />
+
+    <label>
+        Your interests?
+    </label>
+    <!-- ko foreach: interestList -->
+    <br />
+    <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.chosenInterests, attr: { id: 'chkbx_' + $index() }" />
+    <label data-bind="text: $data, attr: { for: 'chkbx_' + $index() }"></label>
     <!-- /ko -->
-    
-    
+
+    <br />
+
+    <label>
+        Hourly freelance rate:
+    </label>
+    <input type="text" data-bind="textInput: hourlyRateWithSign" />
+
+
+
+    <br />
+    <br />
+    <br />
+
+    <div style="font-size: 2em;">
+        <!-- ko if: fullname() -->
+        <span data-bind="text: 'Hello, ' + fullname() + '! '"></span>
+        <!-- /ko -->
+        <!-- ko if: occupation() -->
+        <span data-bind="text: occupationtext()"></span>
+        <!-- /ko -->
+    </div>
+
     <h3>Output JSON:</h3>
     <div data-bind="text: ko.toJSON($root)">
 
@@ -30,14 +71,46 @@
         $(function () {
             function appViewModel(data) {
                 var self = this;
-                self.name = ko.observable(data.name);
+                self.firstname = ko.observable(data.firstname);
+                self.lastname = ko.observable("");
+                self.occupation = ko.observable();
+                self.chosenInterests = ko.observableArray([]);
+                self.hourlyRate = ko.observable(70);
+
+                self.fullname = ko.pureComputed({
+                    read: function () {
+                        return self.firstname() + " " + self.lastname();
+                    }
+                });
+
+                self.occupationtext = ko.pureComputed({
+                    read: function () {
+                        return "You are a " + self.occupation() + ". ";
+                    }
+                });
+
+                self.hourlyRateWithSign = ko.pureComputed({
+                    read: function () {
+                        return "£" + self.hourlyRate();
+                    },
+                    write: function (value) {
+                        value = parseFloat(value.replace(/[^\.\d]/g, ""));
+                        self.hourlyRate(isNaN(value) ? 0 : value);
+                    }
+                });
+
+                self.interestList = ko.observableArray(["Choice 1", "Choice 2"]);
+
+                self.occupationList = ko.observableArray(["Web developer", "Mobile developer", "UI Designer"]);
 
             }
 
             var ele = document.getElementById("basic");
-            var model = new appViewModel({ name: 'umair' });
+            var model = new appViewModel({ firstname: 'Umair' });
             ko.applyBindings(model, ele);
 
         });
     </script>
 }
+
+@*http://stackoverflow.com/users/594420/rp-niemeyer*@

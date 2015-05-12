@@ -3,6 +3,31 @@
 }
 
 <h2>KO Demos Home</h2>
-<p>
 
-</p>
+<div>
+    <ul>
+        @{
+            var types =
+                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from t in a.GetTypes()
+                where typeof(IController).IsAssignableFrom(t) &&
+                      string.Equals("HomeController", t.Name, StringComparison.OrdinalIgnoreCase)
+                select t;
+
+            var controllerType = types.FirstOrDefault();
+
+            var acs = new ReflectedControllerDescriptor(controllerType)
+                .GetCanonicalActions().Select(x => x.ActionName)
+                .ToList();
+
+            foreach (var action in acs)
+            {
+                <text>
+                    <li>
+                        <a href="@Url.Action(action)">@action</a>
+                    </li>
+                </text>
+            }
+        }
+    </ul>
+</div>
