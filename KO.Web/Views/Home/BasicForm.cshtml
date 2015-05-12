@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "BasicForm";
+}
+
+<h2>BasicForm</h2>
+
+<div id="basic">
+
+    <label>
+        Enter your name:
+    </label>
+    <input type="text" data-bind="value: name" />
+
+    <!-- ko if: name() -->
+    <p data-bind="text: 'Hello, ' + name() + '!'"></p>
+    <!-- /ko -->
+    
+    
+    <h3>Output JSON:</h3>
+    <div data-bind="text: ko.toJSON($root)">
+
+    </div>
+
+</div>
+
+@section ExtraScripts
+{
+    <script>
+        $(function () {
+            function appViewModel(data) {
+                var self = this;
+                self.name = ko.observable(data.name);
+
+            }
+
+            var ele = document.getElementById("basic");
+            var model = new appViewModel({ name: 'umair' });
+            ko.applyBindings(model, ele);
+
+        });
+    </script>
+}

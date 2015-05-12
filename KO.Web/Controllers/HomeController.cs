@@ -12,5 +12,16 @@ namespace KO.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult BasicForm()
+        {
+            return View();
+        }
+
+        public ActionResult BasicTodo()
+        {
+            return View();
+        }
+
     }
 }
