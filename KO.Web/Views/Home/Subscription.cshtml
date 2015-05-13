@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Subscription";
+}
+
+<h2>Subscription</h2>
+
+
+<div id="subscribe">
+
+    <label>
+        Name:
+    </label>
+    <input type="text" data-bind="value: name" />
+
+
+    <br />
+    <br />
+    <br />
+
+    <div style="font-size: 2em;">
+        <!-- ko if: name() -->
+        <span data-bind="text: 'Hello, ' + name() + '! '"></span>
+        <!-- /ko -->
+    </div>
+
+    <h3>Output JSON:</h3>
+    <div data-bind="text: ko.toJSON($root)">
+
+    </div>
+
+</div>
+
+@section ExtraScripts
+{
+    <script>
+        $(function () {
+            function appViewModel(data) {
+                var self = this;
+                self.name = ko.observable(data.name);
+
+                self.name.subscribe(function (newValue) {
+                    alertify.success("New Value: " + newValue);
+                });
+
+                self.name.subscribe(function (oldValue) {
+                    alertify.error("Old Value: " + oldValue);
+                }, null, "beforeChange");
+            }
+
+            var ele = document.getElementById("subscribe");
+            var model = new appViewModel({ name: 'Umair' });
+            ko.applyBindings(model, ele);
+
+        });
+    </script>
+}

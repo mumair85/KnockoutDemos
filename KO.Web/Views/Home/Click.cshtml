@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Click";
+}
+
+<h2>Click</h2>
+
+
+<div id="clk">
+
+    <label>
+        Email:
+    </label>
+    <input type="text" data-bind="value: email" />
+
+    <br />
+
+    <input type="button" data-bind="click: getGravatar" value="Get Gravatar" />
+
+
+    <br />
+    <br />
+    <br />
+    
+    <!-- ko if: gravatarUrl() -->
+    <img data-bind="attr: { src: gravatarUrl() } " />
+    <!-- /ko -->
+
+    <h3>Output JSON:</h3>
+    <div data-bind="text: ko.toJSON($root)">
+
+    </div>
+
+</div>
+
+@section ExtraScripts
+{
+    <script>
+        $(function () {
+            function appViewModel() {
+                var self = this;
+                self.email = ko.observable("");
+                self.gravatarUrl = ko.observable("");
+
+                self.getGravatar = function () {
+                    if (self.email()) {
+                        var hash = calcMD5(self.email());
+
+                        self.gravatarUrl("http://www.gravatar.com/avatar/" + hash);
+                    } else {
+                        self.gravatarUrl("");
+                    }
+                };
+
+            }
+
+            var ele = document.getElementById("clk");
+            var model = new appViewModel({ firstname: 'Umair' });
+            ko.applyBindings(model, ele);
+
+        });
+    </script>
+}

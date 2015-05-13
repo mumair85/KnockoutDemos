@@ -9,6 +9,12 @@ namespace KO.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                        "~/Scripts/alertify.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/md5").Include(
+                        "~/Scripts/GetMD5.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/alertify").Include(
                         "~/Scripts/knockout-3.3.0.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -28,7 +34,8 @@ namespace KO.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/alertifyjs/alertify.min.css"));
         }
     }
 }

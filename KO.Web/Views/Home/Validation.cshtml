@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Validation";
+}
+
+<h2>Simple KO Validation</h2>
+
+<div id="simpleValidation">
+    <label>Enter a numeric value:</label>
+    <input data-bind="textInput: attemptedValue" />
+
+    <br />
+
+    <label class="error" data-bind="visible: !lastInputWasValid()">That's not a number!</label>
+
+    <br />
+    <br />
+
+    Accepted value: <span data-bind="text: acceptedNumericValue"></span>
+</div>
+
+@section ExtraScripts
+{
+    <script>
+        $(function () {
+            function appViewModel() {
+                var self = this;
+
+                self.acceptedNumericValue = ko.observable(123);
+                self.lastInputWasValid = ko.observable(true);
+
+                self.attemptedValue = ko.computed({
+                    read: self.acceptedNumericValue,
+                    write: function (value) {
+                        if (isNaN(value))
+                            self.lastInputWasValid(false);
+                        else {
+                            self.lastInputWasValid(true);
+                            self.acceptedNumericValue(value);
+                        }
+                    }
+                });
+
+            }
+
+            var ele = document.getElementById("simpleValidation");
+            var model = new appViewModel({ firstname: 'Umair' });
+            ko.applyBindings(model, ele);
+
+        });
+    </script>
+}

@@ -26,3 +26,8 @@ textarea {
 label {
     min-width: 200px;
 }
+
+.error {
+    color: red;
+    font-weight: bold;
+}
