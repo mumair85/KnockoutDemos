@@ -2,7 +2,7 @@
     ViewBag.Title = "Validation";
 }
 
-<h2>Simple KO Validation</h2>
+<h2>Validation using Extender</h2>
 
 <div id="simpleValidation">
     <label>Enter a numeric value:</label>
@@ -18,11 +18,34 @@
     Accepted value: <span data-bind="text: acceptedNumericValue"></span>
 </div>
 
+
+<br />
+<hr/>
+<br />
+
+
+<h2>KO Validation using Library</h2>
+
+<i>
+    https://github.com/Knockout-Contrib/Knockout-Validation <b>(Check out WIKI)</b>
+</i>
+
+<br />
+<br />
+<div id="koValidation">
+    <label>String must start with 'u':</label>
+    <input data-bind="value: attemptedValue" />
+
+    <br />
+    <br />
+
+</div>
+
 @section ExtraScripts
 {
     <script>
         $(function () {
-            function appViewModel() {
+            function appViewModelSimple() {
                 var self = this;
 
                 self.acceptedNumericValue = ko.observable(123);
@@ -43,8 +66,35 @@
             }
 
             var ele = document.getElementById("simpleValidation");
-            var model = new appViewModel({ firstname: 'Umair' });
-            ko.applyBindings(model, ele);
+            var modelSimple = new appViewModelSimple();
+            ko.applyBindings(modelSimple, ele);
+
+
+
+            ko.validation.init({
+                insertMessages: true
+            });
+
+            ko.validation.rules['mustStartWith'] = {
+                validator: function (val, otherVal) {
+                    return val.substring(0, 1) === otherVal;
+                },
+                message: 'The value must start with \'{0}\''
+            };
+            ko.validation.registerExtenders();
+
+            function appViewModelKo() {
+                var self = this;
+
+                self.attemptedValue = ko.observable("").extend({ mustStartWith: 'u' });
+
+            }
+
+            var modelKo = new appViewModelKo();
+            ko.applyBindings(modelKo, document.getElementById("koValidation"));
+
+            
+
 
         });
     </script>

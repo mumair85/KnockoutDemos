@@ -27,6 +27,7 @@ label {
     min-width: 200px;
 }
 
+.validationMessage,
 .error {
     color: red;
     font-weight: bold;

@@ -8,14 +8,15 @@ namespace KO.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+            bundles.Add(new ScriptBundle("~/bundles/alertify").Include(
                         "~/Scripts/alertify.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                         "~/Scripts/GetMD5.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/alertify").Include(
-                        "~/Scripts/knockout-3.3.0.js"));
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                        "~/Scripts/knockout-3.3.0.js",
+                        "~/Scripts/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
