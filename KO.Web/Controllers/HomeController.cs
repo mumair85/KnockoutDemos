@@ -49,5 +49,10 @@ namespace KO.Web.Controllers
             return View();
         }
 
+        public ActionResult BindingHandler()
+        {
+            return View();
+        }
+
     }
 }

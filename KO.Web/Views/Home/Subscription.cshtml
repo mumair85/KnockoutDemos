@@ -1,35 +1,40 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Subscription";
 }
 
-<h2>Subscription</h2>
-
-
-<div id="subscribe">
-
-    <label>
-        Name:
-    </label>
-    <input type="text" data-bind="value: name" />
-
-
-    <br />
-    <br />
-    <br />
-
-    <div style="font-size: 2em;">
-        <!-- ko if: name() -->
-        <span data-bind="text: 'Hello, ' + name() + '! '"></span>
-        <!-- /ko -->
+<div class="panel panel-info" id="subscribe">
+    <div class="panel-heading">
+        <h3>Subscription Demo</h3>
     </div>
+    <div class="panel-body">
 
-    <h3>Output JSON:</h3>
-    <div data-bind="text: ko.toJSON($root)">
+        <label>
+            Name:
+        </label>
+        <input type="text" data-bind="value: name" />
+
+
+        <br />
+        <br />
+        <br />
+
+        <div style="font-size: 2em;">
+            <!-- ko if: name() -->
+            <span data-bind="text: 'Hello, ' + name() + '! '"></span>
+            <!-- /ko -->
+        </div>
 
     </div>
+    <div class="panel-footer">
 
+        <h3>Output JSON:</h3>
+        <pre data-bind="text: JSON.stringify(ko.toJS($root), null, 2)">
+    </pre>
+
+    </div>
 </div>
+
+
 
 @section ExtraScripts
 {

@@ -2,49 +2,63 @@
     ViewBag.Title = "Validation";
 }
 
-<h2>Validation using Extender</h2>
+<div class="panel panel-info" id="simpleValidation">
+    <div class="panel-heading">
+        <h3>Validation demo using Extender</h3>
+    </div>
+    <div class="panel-body">
+        <label>Enter a numeric value:</label>
+        <input data-bind="textInput: attemptedValue" />
 
-<div id="simpleValidation">
-    <label>Enter a numeric value:</label>
-    <input data-bind="textInput: attemptedValue" />
+        <br />
 
-    <br />
+        <label class="error" data-bind="visible: !lastInputWasValid()">That's not a number!</label>
 
-    <label class="error" data-bind="visible: !lastInputWasValid()">That's not a number!</label>
+        <br />
+        <br />
 
-    <br />
-    <br />
+        Accepted value: <span data-bind="text: acceptedNumericValue"></span>
 
-    Accepted value: <span data-bind="text: acceptedNumericValue"></span>
+    </div>
+    <div class="panel-footer">
+
+        <h3>Output JSON:</h3>
+        <pre data-bind="text: JSON.stringify(ko.toJS($root), null, 2)">
+    </pre>
+
+    </div>
+</div>
+
+<div class="panel panel-info" id="koValidation">
+    <div class="panel-heading">
+        <h3>Validation demo using KO-Validation Library</h3>
+        <i>
+            https://github.com/Knockout-Contrib/Knockout-Validation <b>(Check out WIKI)</b>
+        </i>
+
+    </div>
+    <div class="panel-body">
+        <label>String must start with 'u':</label>
+        <input data-bind="value: attemptedValue" />
+
+    </div>
+    <div class="panel-footer">
+
+        <h3>Output JSON:</h3>
+        <pre data-bind="text: JSON.stringify(ko.toJS($root), null, 2)">
+    </pre>
+
+    </div>
 </div>
 
 
-<br />
-<hr/>
-<br />
-
-
-<h2>KO Validation using Library</h2>
-
-<i>
-    https://github.com/Knockout-Contrib/Knockout-Validation <b>(Check out WIKI)</b>
-</i>
-
-<br />
-<br />
-<div id="koValidation">
-    <label>String must start with 'u':</label>
-    <input data-bind="value: attemptedValue" />
-
-    <br />
-    <br />
-
-</div>
 
 @section ExtraScripts
 {
     <script>
         $(function () {
+
+            // KO validation
             function appViewModelSimple() {
                 var self = this;
 
@@ -71,6 +85,10 @@
 
 
 
+
+
+
+            // KO validation using library
             ko.validation.init({
                 insertMessages: true
             });
@@ -93,7 +111,7 @@
             var modelKo = new appViewModelKo();
             ko.applyBindings(modelKo, document.getElementById("koValidation"));
 
-            
+
 
 
         });

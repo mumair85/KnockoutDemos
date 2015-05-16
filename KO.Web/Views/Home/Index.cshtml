@@ -2,32 +2,54 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>KO Demos Home</h2>
+<h2></h2>
 
-<div>
-    <ul>
-        @{
-            var types =
-                from a in AppDomain.CurrentDomain.GetAssemblies()
-                from t in a.GetTypes()
-                where typeof(IController).IsAssignableFrom(t) &&
-                      string.Equals("HomeController", t.Name, StringComparison.OrdinalIgnoreCase)
-                select t;
+<div class="panel panel-info" id="">
+    <div class="panel-heading">
+        <h3>Knockout Demo</h3>
+    </div>
 
-            var controllerType = types.FirstOrDefault();
+    <ul class="list-group">
 
-            var acs = new ReflectedControllerDescriptor(controllerType)
-                .GetCanonicalActions().Select(x => x.ActionName)
-                .ToList();
+        <li class="list-group-item">
+            @Html.ActionLink("Basic Form Demo", "BasicForm")
+        </li>
+        
 
-            foreach (var action in acs)
-            {
-                <text>
-                    <li>
-                        <a href="@Url.Action(action)">@action</a>
-                    </li>
-                </text>
-            }
-        }
+        <li class="list-group-item">
+            @Html.ActionLink("Subscription Demo", "Subscription")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Click Demo", "Click")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Validation Demo", "Validation")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Extender Demo", "Extender")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Template Demo", "Template")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Binding Handler Demo", "BindingHandler")
+        </li>
+
+
+        <li class="list-group-item">
+            @Html.ActionLink("Todo Demo", "BasicTodo")
+        </li>
+
+
     </ul>
 </div>

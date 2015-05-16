@@ -193,6 +193,7 @@
     <Content Include="Views\Home\Click.cshtml" />
     <Content Include="Views\Home\Extender.cshtml" />
     <Content Include="Views\Home\Template.cshtml" />
+    <Content Include="Views\Home\BindingHandler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

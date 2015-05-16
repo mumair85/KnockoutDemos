@@ -1,68 +1,73 @@
 ﻿@{
     ViewBag.Title = "BasicForm";
 }
-
-<h2>BasicForm</h2>
-
-<div id="basic">
-
-    <label>
-        Firstname:
-    </label>
-    <input type="text" data-bind="value: firstname" />
-
-    <br />
-
-    <label>
-        Lastname:
-    </label>
-    <input type="text" data-bind="textInput: lastname" />
-
-    <br />
-
-    <label>
-        Occupation:
-    </label>
-    <select data-bind="options: occupationList, value: occupation, optionsCaption: 'Choose one...', valueAllowUnset: true"></select>
-
-    <br />
-
-    <label>
-        Your interests?
-    </label>
-    <!-- ko foreach: interestList -->
-    <br />
-    <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.chosenInterests, attr: { id: 'chkbx_' + $index() }" />
-    <label data-bind="text: $data, attr: { for: 'chkbx_' + $index() }"></label>
-    <!-- /ko -->
-
-    <br />
-
-    <label>
-        Hourly freelance rate:
-    </label>
-    <input type="text" data-bind="textInput: hourlyRateWithSign" />
-
-
-
-    <br />
-    <br />
-    <br />
-
-    <div style="font-size: 2em;">
-        <!-- ko if: fullname() -->
-        <span data-bind="text: 'Hello, ' + fullname() + '! '"></span>
-        <!-- /ko -->
-        <!-- ko if: occupation() -->
-        <span data-bind="text: occupationtext()"></span>
-        <!-- /ko -->
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3>
+            Basic Form Demo
+        </h3>
     </div>
+    <div class="panel-body">
 
-    <h3>Output JSON:</h3>
-    <div data-bind="text: ko.toJSON($root)">
+        <label>
+            Firstname:
+        </label>
+        <input type="text" data-bind="value: firstname" />
+
+        <br />
+
+        <label>
+            Lastname:
+        </label>
+        <input type="text" data-bind="textInput: lastname" />
+
+        <br />
+
+        <label>
+            Occupation:
+        </label>
+        <select data-bind="options: occupationList, value: occupation, optionsCaption: 'Choose one...', valueAllowUnset: true"></select>
+
+        <br />
+
+        <label>
+            Your interests?
+        </label>
+        <!-- ko foreach: interestList -->
+        <br />
+        <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.chosenInterests, attr: { id: 'chkbx_' + $index() }" />
+        <label data-bind="text: $data, attr: { for: 'chkbx_' + $index() }"></label>
+        <!-- /ko -->
+
+        <br />
+
+        <label>
+            Hourly freelance rate:
+        </label>
+        <input type="text" data-bind="textInput: hourlyRateWithSign" />
+
+
+
+        <br />
+        <br />
+        <br />
+
+        <div style="font-size: 2em;">
+            <!-- ko if: fullname() -->
+            <span data-bind="text: 'Hello, ' + fullname() + '! '"></span>
+            <!-- /ko -->
+            <!-- ko if: occupation() -->
+            <span data-bind="text: occupationtext()"></span>
+            <!-- /ko -->
+        </div>
+
 
     </div>
-
+    <div class="panel-footer">
+        <h3>Output JSON:</h3>
+        <pre data-bind="text: JSON.stringify(ko.toJS($root), null, 2)">
+        </pre>
+    </div>
 </div>
 
 @section ExtraScripts
@@ -85,7 +90,9 @@
 
                 self.occupationtext = ko.pureComputed({
                     read: function () {
-                        return "You are a " + self.occupation() + ". ";
+                        if (self.occupation())
+                            return "You are a " + self.occupation() + ". ";
+                        return "";
                     }
                 });
 
