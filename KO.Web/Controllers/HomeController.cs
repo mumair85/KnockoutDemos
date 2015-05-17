@@ -54,5 +54,10 @@ namespace KO.Web.Controllers
             return View();
         }
 
+        public ActionResult Mapping()
+        {
+            return View();
+        }
+
     }
 }
