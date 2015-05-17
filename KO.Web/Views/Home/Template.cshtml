@@ -1,17 +1,98 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Template";
 }
 
+<script type="text/html" id="RED-Template">
+    <span data-bind="text: name" style="color: red"></span>
+</script>
 
-<div class="panel panel-info" id="">
+<script type="text/html" id="GREEN-Template">
+    <span data-bind="text: name" style="color: green"></span>
+</script>
+
+<script type="text/html" id="BLUE-Template">
+    <span data-bind="text: name" style="color: blue"></span>
+</script>
+
+
+
+<div class="panel panel-info" id="templatebinding">
     <div class="panel-heading">
         <h3>Template Demo</h3>
     </div>
     <div class="panel-body">
 
+        <label>
+            Name:
+        </label>
+        <input type="text" data-bind="value: selectedName" />
+
+        <br />
+
+        <label>
+            Colour:
+        </label>
+        <select data-bind="options: colourList, value: selectedColour"></select>
+
+        <br />
+        <br />
+
+        <input type="button" data-bind="click: addItem" value="Add" />
+
+        <br />
+
+        <div data-bind="foreach: items" class="colourItems">
+            <span data-bind="template: templateName">
+
+            </span>
+        </div>
+
     </div>
     <div class="panel-footer">
 
+        <h3>Output JSON:</h3>
+        <pre data-bind="text: JSON.stringify(ko.toJS($root), null, 2)">
+        </pre>
+
     </div>
 </div>
+
+@section ExtraScripts
+{
+    <script>
+        $(function() {
+
+            function appViewModel() {
+                var self = this;
+
+                self.selectedName = ko.observable();
+                self.selectedColour = ko.observable();
+
+                self.items = ko.observableArray([]);
+                self.colourList = ko.observableArray(["Red", "Blue", "Green"]);
+
+                self.addItem = function () {
+                    if (self.selectedName())
+                        self.items.push(new listViewModel({ 'name': self.selectedName() , 'colour': self.selectedColour() }));
+                };
+            }
+
+            function listViewModel(data) {
+                var self = this;
+                self.name = ko.observable(data.name);
+                self.colour = ko.observable(data.colour);
+
+                self.templateName = ko.computed({
+                    read: function() {
+                        return self.colour().toUpperCase() + "-Template";
+                    }
+                });
+            }
+
+            var ele = document.getElementById("templatebinding");
+            var model = new appViewModel();
+            ko.applyBindings(model, ele);
+
+        });
+    </script>
+}

@@ -32,3 +32,9 @@ label {
     color: red;
     font-weight: bold;
 }
+
+.colourItems > span {
+    display: inline-block;
+    margin: 10px;
+    font-size: 1.4em;
+}
