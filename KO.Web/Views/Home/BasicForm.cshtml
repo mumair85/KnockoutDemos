@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "BasicForm";
 }
-<div class="panel panel-info">
+<div class="panel panel-info" id="basic">
     <div class="panel-heading">
         <h3>
             Basic Form Demo
@@ -82,13 +82,13 @@
                 self.chosenInterests = ko.observableArray([]);
                 self.hourlyRate = ko.observable(70);
 
-                self.fullname = ko.computed({
+                self.fullname = ko.pureComputed({
                     read: function () {
                         return self.firstname() + " " + self.lastname();
                     }
                 });
 
-                self.occupationtext = ko.computed({
+                self.occupationtext = ko.pureComputed({
                     read: function () {
                         if (self.occupation())
                             return "You are a " + self.occupation() + ". ";
@@ -96,7 +96,7 @@
                     }
                 });
 
-                self.hourlyRateWithSign = ko.computed({
+                self.hourlyRateWithSign = ko.pureComputed({
                     read: function () {
                         return "£" + self.hourlyRate();
                     },
@@ -119,3 +119,5 @@
         });
     </script>
 }
+
+@*http://stackoverflow.com/users/594420/rp-niemeyer*@
