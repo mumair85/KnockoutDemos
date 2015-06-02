@@ -113,6 +113,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WebResourcesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -513,6 +514,7 @@
     <Content Include="Views\Home\Template.cshtml" />
     <Content Include="Views\Home\BindingHandler.cshtml" />
     <Content Include="Views\Home\Mapping.cshtml" />
+    <Content Include="Views\WebResources\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
