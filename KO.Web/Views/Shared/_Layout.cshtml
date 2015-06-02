@@ -39,7 +39,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/alertify")
-    @Scripts.Render("~/bundles/md5")
+            @Scripts.Render("~/bundles/md5")
+            <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+        <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
 
     @RenderSection("scripts", required: false)
     @RenderSection("ExtraScripts", required: false)

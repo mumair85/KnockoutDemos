@@ -18,12 +18,6 @@ namespace KO.Web.Controllers
             return View();
         }
 
-        public ActionResult BasicTodo()
-        {
-            // add destroy functionality
-            return View();
-        }
-
         public ActionResult Subscription()
         {
             return View();

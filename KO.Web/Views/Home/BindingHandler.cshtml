@@ -11,19 +11,12 @@
     <div class="panel-body">
 
         <label>
-            Firstname:
+            Text editor:
         </label>
-        <input type="text" data-bind="value: firstname" />
+        <textarea data-bind="ckeditor: htmltext, valueUpdate: 'afterkeydown'"></textarea>
 
         <br />
-
-        <label>
-            Lastname:
-        </label>
-        <input type="text" data-bind="textInput: lastname" />
-
-        <br />
-
+        
     </div>
     <div class="panel-footer">
 
@@ -38,17 +31,44 @@
 {
     <script>
         $(function () {
+            // ---- ckeditor binding
+            ko.bindingHandlers.ckeditor = {
+                init: function (element, valueAccessor, allBindingsAccessor, context) {
+                    var options = allBindingsAccessor().ckeditorOptions || {};
+                    var modelValue = valueAccessor();
+                    var value = ko.utils.unwrapObservable(valueAccessor());
+
+                    $(element).html(value);
+                    $(element).ckeditor();
+
+                    var editor = $(element).ckeditorGet();
+
+                    //handle edits made in the editor
+                    editor.on('change', function (e) {
+                        var self = this;
+                        if (ko.isWriteableObservable(self)) {
+                            self($(e.listenerData).val());
+                        }
+                    }, modelValue, element);
+
+                    //handle disposal (if KO removes by the template binding)
+                    ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                        if (editor) {
+                            CKEDITOR.remove(editor);
+                        };
+                    });
+                },
+                update: function (element, valueAccessor, allBindingsAccessor, context) {
+                    // handle programmatic updates to the observable
+                    var newValue = ko.utils.unwrapObservable(valueAccessor());
+                    if ($(element).ckeditorGet().getData() != newValue)
+                        $(element).ckeditorGet().setData(newValue);
+                }
+            };
+
             function appViewModel() {
                 var self = this;
-                self.firstname = ko.observable("");
-                self.lastname = ko.observable("");
-
-                self.fullname = ko.pureComputed({
-                    read: function () {
-                        return self.firstname() + " " + self.lastname();
-                    }
-                });
-
+                self.htmltext = ko.observable("");
             }
 
             var ele = document.getElementById("bindinghandler");
