@@ -82,13 +82,13 @@
                 self.chosenInterests = ko.observableArray([]);
                 self.hourlyRate = ko.observable(70);
 
-                self.fullname = ko.pureComputed({
+                self.fullname = ko.computed({
                     read: function () {
                         return self.firstname() + " " + self.lastname();
                     }
                 });
 
-                self.occupationtext = ko.pureComputed({
+                self.occupationtext = ko.computed({
                     read: function () {
                         if (self.occupation())
                             return "You are a " + self.occupation() + ". ";
@@ -96,7 +96,7 @@
                     }
                 });
 
-                self.hourlyRateWithSign = ko.pureComputed({
+                self.hourlyRateWithSign = ko.computed({
                     read: function () {
                         return "£" + self.hourlyRate();
                     },

@@ -50,7 +50,7 @@
 
                 self.name.subscribe(function (oldValue) {
                     alertify.error("Old Value: " + oldValue);
-                }, null, "beforeChange");
+                }, null, "beforeChange"); // default is 'change' as above subscription
             }
 
             var ele = document.getElementById("subscribe");
